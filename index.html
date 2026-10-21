@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Веб-мастерская | Запись на занятия</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="scripts/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Веб-мастерская, главная"><span class="brand__mark" aria-hidden="true">вм.</span><span>Веб-мастерская<small>Учимся на практике</small></span></a>
+    <nav aria-label="Разделы"><a href="#applications">Заявки</a><a href="#lab">Диагностика</a></nav>
+  </header>
+
+  <main>
+    <div class="incident-banner"><span class="status-dot" aria-hidden="true"></span><span>После ночной атаки проверяем восстановленную копию. Все данные учебные.</span><a href="INCIDENT_CHAT.md">Переписка дежурного ↗</a></div>
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">ОТКРЫТЫЕ ЗАНЯТИЯ</p><h1 id="page-title">Сделаем что-нибудь<br><span>своими руками.</span></h1><p>Выберите направление и оставьте заявку.<br>На встрече разберём вопросы и попробуем всё в деле.</p></div>
+      <div class="intro__note"><span class="intro__number">01 / 07</span><strong>От идеи<br>до работающего сайта</strong><span>HTML · CSS · JavaScript</span></div>
+    </section>
+
+    <div class="workspace">
+      <section class="panel form-panel" aria-labelledby="form-title">
+        <div class="section-heading"><span class="step">01</span><h2 id="form-title">Оставить заявку</h2></div>
+        <form id="application-form" novalidate>
+          <label for="name">Как вас зовут</label>
+          <input id="name" name="name" autocomplete="name" maxlength="60" placeholder="Имя и фамилия" required>
+          <label for="topic">Направление</label>
+          <select id="topic" name="topic" required>
+            <option value="">Выберите занятие</option>
+            <option value="html">HTML и CSS</option>
+            <option value="javascript">JavaScript и DOM</option>
+            <option value="api">HTTP и API</option>
+          </select>
+          <label for="comment">Что хотите разобрать <span class="optional">необязательно</span></label>
+          <textarea id="comment" name="comment" rows="3" maxlength="200" placeholder="Например, как связать форму и список"></textarea>
+          <input type="hidden" name="supportCode" id="support-code" value="" autocomplete="off">
+          <button id="submit-button" class="button button--primary" type="submit">Отправить заявку <span aria-hidden="true">↗</span></button>
+          <p id="form-status" class="form-status" role="status" aria-live="polite">Заявка останется в этом браузере.</p>
+        </form>
+        <button id="reset-interface" class="text-button" type="button">Сбросить интерфейс</button>
+      </section>
+
+      <section id="applications" class="panel applications-panel" aria-labelledby="list-title">
+        <div class="section-heading"><span class="step">02</span><h2 id="list-title">Заявки</h2><span class="count" id="application-count" aria-label="Видимых заявок">0</span></div>
+        <div class="list-toolbar">
+          <label class="sr-only" for="filter">Фильтр по направлению</label>
+          <select id="filter"><option value="all">Все направления</option><option value="html">HTML и CSS</option><option value="javascript">JavaScript и DOM</option><option value="api">HTTP и API</option></select>
+          <button id="refresh-button" class="button button--small" type="button">Обновить</button>
+        </div>
+        <p id="list-status" class="muted" role="status"></p>
+        <div id="application-list" class="application-list"></div>
+        <div id="empty-state" class="empty-state" hidden>Пока нет заявок по этому направлению.</div>
+        <section class="selection" aria-labelledby="selection-title">
+          <p class="eyebrow" id="selection-title">ВЫБРАННАЯ ЗАЯВКА</p>
+          <p id="selection-empty" class="muted">Выберите карточку, чтобы прочитать комментарий.</p>
+          <div id="selection-content" hidden><h3 id="selection-name"></h3><p id="selection-topic" class="muted"></p><p id="selection-comment" class="comment"></p></div>
+        </section>
+      </section>
+    </div>
+
+    <section class="panel security-panel" aria-labelledby="security-title">
+      <div class="section-heading"><span class="step">03</span><h2 id="security-title">Контроль действий</h2><span class="label">Дополнительная часть</span></div>
+      <div class="security-grid">
+        <div><h3 id="security-status" role="status">Ограничений нет</h3><p id="restriction-detail" class="muted" hidden></p><p class="muted">Место для статуса, причины и таймера.</p></div>
+        <div><h3>Журнал <span id="incident-count" class="muted">0</span></h3><p id="incidents-empty" class="muted">Инцидентов пока нет.</p><ol id="incident-list" class="incident-list" aria-label="Инциденты"></ol></div>
+      </div>
+      <button id="staff-export" type="button" hidden>Открыть служебную выгрузку</button>
+    </section>
+
+    <details id="lab" class="lab-panel">
+      <summary>Условия проверки <span>Режимы и исходные данные</span></summary>
+      <div class="lab-controls"><label for="service-mode">Ответ сервиса</label><select id="service-mode"><option value="normal">Обычный</option><option value="delay">Задержка 2 секунды</option><option value="error">Ошибка 503</option></select><button id="test-incident" class="button button--small" type="button">Пробный инцидент</button><button id="reset-lab" class="button button--small" type="button">Сбросить стенд</button></div>
+      <p>Сервис работает внутри браузера. Режим влияет на следующую отправку. Сброс вернёт три исходные заявки и удалит данные этого проекта, включая будущий журнал. Сначала сохраните свидетельства.</p>
+      <p id="lab-status" role="status"></p>
+    </details>
+  </main>
+  <footer><span>Веб-мастерская</span><span id="version"></span><a href="README.md">Задание ↗</a></footer>
+</body>
+</html>
